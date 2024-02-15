@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+  <style>
+    #arjsDebugUIContainer {
+      display: none;
+    }
+  </style>
+  <body style="margin: 0px; overflow: hidden">
+    <a-scene embedded arjs="sourceType: webcam;">
+      <!-- Aesthetic Computer-->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-aestheticComputer.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video"
+        ></a-plane>
+        <video
+          id="video"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/flags.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Distance From Source -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-distanceFromSource.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video2"
+        ></a-plane>
+        <video
+          id="video2"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/adsspeed.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Emotions Detector -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-emotionsDetector.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video3"
+        ></a-plane>
+        <video
+          id="video3"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/makeFashionFasterNew.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Pianos-->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-pianos.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video4"
+        ></a-plane>
+        <video
+          id="video4"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/sheinScrapeNew.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Ready Companion -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-readyCompanion%20(1).patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video5"
+        ></a-plane>
+        <video
+          id="video5"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/trendCycleNew.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- scan artist -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-scanArtist%20(1).patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video5"
+        ></a-plane>
+        <video
+          id="video5"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/trendCycleNew.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Uye Surana -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-uyeSurana.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video5"
+        ></a-plane>
+        <video
+          id="video5"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/trendCycleNew.mp4"
+        ></video>
+      </a-marker>
+
+      <!-- Worship Me -->
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-worshipMe.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 1 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video5"
+        ></a-plane>
+        <video
+          id="video5"
+          autoplay
+          loop
+          crossorigin="anonymous"
+          src="assets/trendCycleNew.mp4"
+        ></video>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
