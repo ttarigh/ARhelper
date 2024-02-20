@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      font-family: Rockwell Extra Bold, Rockwell Bold, monospace;
+      background-color: rgb(255, 255, 255);
+    }
+    img {
+      max-width: 50%;
+    }
+    .button {
+      background-color: yellow;
+      border: none;
+      color: black;
+      font-family: Rockwell Extra Bold, Rockwell Bold, monospace;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="tutorial">
+    <div id="step1">
+      <p>ONE: Make sure your laptop is on my site.</p>
+      <img src="IMG_0729.GIF" alt="" />
+    </div>
+    <div id="step2" style="display: none;">
+      <p>TWO: Identify the titles of my projects in black and white squares. These are augmented reality markers.</p>
+      <img src="IMG_0732.GIF" alt="" />
+    </div>
+    <div id="step3" style="display: none;">
+      <p>THREE: Point your smartphone at the markers. Enjoy!</p>
+      <img src="IMG_0717.jpg" alt="" />
+    </div>
+    <button id="nextButton" class="button" onclick="showNextStep()">Next Step</button>
+  </div>
+
+  <script>
+    let currentStep = 1;
+
+    function showNextStep() {
+      document.getElementById('step' + currentStep).style.display = 'none';
+      currentStep++;
+      if (currentStep > 2) {
+        document.getElementById('step3').style.display = 'block';
+        document.getElementById('nextButton').innerText = 'GO!';
+        document.getElementById('nextButton').setAttribute('onclick', 'goToARView()');
+      }
+      if (currentStep > 3) {
+        window.location.href = 'arView.html';
+      }
+      if (currentStep > 2) {
+        return;
+      }
+      document.getElementById('step' + currentStep).style.display = 'block';
+    }
+
+    function goToARView() {
+      window.location.href = 'arView.html';
+    }
+  </script>
+</body>
+</html>
