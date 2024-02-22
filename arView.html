@@ -15,7 +15,7 @@
           var marker2 = document.querySelector("#marker2");
           var marker3 = document.querySelector("#marker3");
           var marker4 = document.querySelector("#marker4");
-
+          var marker5 = document.querySelector("#marker5");
 
           var fullbutton = document.querySelector("#fullscreen");
           var Video_0 = document.querySelector("#Video_Asset_0");
@@ -23,24 +23,28 @@
           var Video_2 = document.querySelector("#Video_Asset_2");
           var Video_3 = document.querySelector("#Video_Asset_3");
           var Video_4 = document.querySelector("#Video_Asset_4");
+          var Video_5 = document.querySelector("#Video_Asset_5");
 
           var button = document.querySelector("#mutebutton");
           var button1 = document.querySelector("#mutebutton1");
           var button2 = document.querySelector("#mutebutton2");
           var button3 = document.querySelector("#mutebutton3");
           var button4 = document.querySelector("#mutebutton4");
+          var button5 = document.querySelector("#mutebutton5");
 
           button.hidden = true;
           button1.hidden = true;
           button2.hidden = true;
           button3.hidden = true;
           button4.hidden = true;
+          button5.hidden = true;
 
           Video_0.pause();
           Video_1.pause();
           Video_2.pause();
           Video_3.pause();
           Video_4.pause();
+          Video_5.pause();
 
           marker.addEventListener("markerFound", function (evt) {
             markerFound = 1;
@@ -95,6 +99,17 @@
             markerFound = 0;
             Video_4.pause();
             button4.hidden = true;
+          });
+
+          marker5.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button5.hidden = false;
+          });
+
+          marker5.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_5.pause();
+            button5.hidden = true;
           });
 
           button.addEventListener("click", function (evt) {
@@ -155,6 +170,18 @@
               button4.innerHTML = "Play";
               Video_4.muted = true;
               Video_4.pause();
+            }
+          });
+          button5.addEventListener("click", function (evt) {
+            console.log("button 5 clicked");
+            if (Video_5.muted == true) {
+              button5.innerHTML = "Pause";
+              Video_5.muted = false;
+              Video_5.play();
+            } else {
+              button5.innerHTML = "Play";
+              Video_5.muted = true;
+              Video_5.pause();
             }
           });
 
@@ -221,6 +248,9 @@
         Play
       </button>
       <button id="mutebutton4" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
+      <button id="mutebutton5" style="position: absolute; bottom: 10px" hidden>
         Play
       </button>
     </div>
@@ -297,16 +327,27 @@
           muted
         ></video>
         <video
-        id="Video_Asset_4"
-        autoplay="false"
-        loop
-        crossorigin="anonymous"
-        src="vids/pianos.mov"
-        webkit-playsinline
-        playsinline
-        controls
-        muted
-      ></video>
+          id="Video_Asset_4"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/pianos.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
+        <video
+          id="Video_Asset_5"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/emotionsDetector.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
       </a-assets>
       <!-- AC -->
       <a-marker
@@ -399,6 +440,26 @@
         <a-video
           src="#Video_Asset_4"
           id="Video_4"
+          class="intersectable"
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
+      </a-marker>
+
+      <!-- emotions detector -->
+      <a-marker
+        id="marker5"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-lazars2.patt"
+        emitevents="true"
+      >
+        <a-video
+          src="#Video_Asset_5"
+          id="Video_5"
           class="intersectable"
           position="0 0 0"
           scale="1 2 1"
