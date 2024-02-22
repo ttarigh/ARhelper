@@ -1,12 +1,3 @@
-<!--
-  This one mainly based on https://github.com/taylordigital13/ARjs_Unity
-  Fullscreen buttons are just simple png and the video is mpeg-4 baseline-profile with AAC audio.
-  The video is placed on the Hiro marker and playback is stopped until the user clicks the play button.
-  The same applies to losing and finding the marker again.
-  Problem: On iOS, the video sticks 1.5 times below the actual mark on the screen.
-  This, I have read, comes from the VR setup on iOS, which sets the camera a bit higher.
-!-->
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,22 +10,39 @@
         init: function () {
           var elem = document.documentElement;
           var marker = document.querySelector("#marker");
+          var marker1 = document.querySelector("#marker1");
           var fullbutton = document.querySelector("#fullscreen");
           var Video_0 = document.querySelector("#Video_Asset_0");
+          var Video_1 = document.querySelector("#Video_Asset_1");
           var button = document.querySelector("#mutebutton");
+          var button1 = document.querySelector("#mutebutton1");
           button.hidden = true;
+          button1.hidden = true;
           Video_0.pause();
+          Video_1.pause();
 
           marker.addEventListener("markerFound", function (evt) {
             markerFound = 1;
             button.hidden = false;
-            //Video_0.play();  //if video should start immediently on marker detection
+            //Video_0.play();  //if video should start immediately on marker detection
           });
 
           marker.addEventListener("markerLost", function (evt) {
             markerFound = 0;
             Video_0.pause();
             button.hidden = true;
+          });
+
+          marker1.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button1.hidden = false;
+            //Video_1.play();  //if video should start immediately on marker detection
+          });
+
+          marker1.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_1.pause();
+            button1.hidden = true;
           });
 
           button.addEventListener("click", function (evt) {
@@ -47,6 +55,19 @@
               button.innerHTML = "Play";
               Video_0.muted = true;
               Video_0.pause();
+            }
+          });
+
+          button1.addEventListener("click", function (evt) {
+            console.log("button 1 clicked");
+            if (Video_1.muted == true) {
+              button1.innerHTML = "Pause";
+              Video_1.muted = false;
+              Video_1.play();
+            } else {
+              button1.innerHTML = "Play";
+              Video_1.muted = true;
+              Video_1.pause();
             }
           });
 
@@ -103,6 +124,9 @@
       <button id="mutebutton" style="position: absolute; bottom: 10px" hidden>
         Play
       </button>
+      <button id="mutebutton1" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
     </div>
     <div
       style="
@@ -143,13 +167,23 @@
           controls
           muted
         ></video>
+        <video
+          id="Video_Asset_1"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/readyCompanion.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
       </a-assets>
       <a-marker id="marker" preset="hiro" emitevents="true" button>
         <a-video
           src="#Video_Asset_0"
           id="Video_0"
           class="intersectable"
-
           position="0 0 0"
           scale="1 2 1"
           rotation="-90 0 0"
@@ -157,6 +191,19 @@
           transparent="False"
         ></a-video>
       </a-marker>
+      <a-marker id="marker1" preset="kanji" emitevents="true">
+        <a-video
+          src="#Video_Asset_1"
+          id="Video_1"
+          class="intersectable"
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
+      </a-marker>
+
       <a-entity camera></a-entity>
     </a-scene>
   </body>
