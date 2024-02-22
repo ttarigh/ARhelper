@@ -17,6 +17,7 @@
           var marker4 = document.querySelector("#marker4");
           var marker5 = document.querySelector("#marker5");
           var marker6 = document.querySelector("#marker6");
+          var marker7 = document.querySelector("#marker7");
 
 
           var fullbutton = document.querySelector("#fullscreen");
@@ -27,6 +28,7 @@
           var Video_4 = document.querySelector("#Video_Asset_4");
           var Video_5 = document.querySelector("#Video_Asset_5");
           var Video_6 = document.querySelector("#Video_Asset_6");
+          var Video_7 = document.querySelector("#Video_Asset_7");
 
 
           var button = document.querySelector("#mutebutton");
@@ -36,6 +38,7 @@
           var button4 = document.querySelector("#mutebutton4");
           var button5 = document.querySelector("#mutebutton5");
           var button6 = document.querySelector("#mutebutton6");
+          var button7 = document.querySelector("#mutebutton7");
 
 
           button.hidden = true;
@@ -45,6 +48,7 @@
           button4.hidden = true;
           button5.hidden = true;
           button6.hidden = true;
+          button7.hidden = true;
 
 
           Video_0.pause();
@@ -54,6 +58,7 @@
           Video_4.pause();
           Video_5.pause();
           Video_6.pause();
+          Video_7.pause();
 
 
           marker.addEventListener("markerFound", function (evt) {
@@ -131,6 +136,17 @@
             markerFound = 0;
             Video_6.pause();
             button6.hidden = true;
+          });
+
+          marker7.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button7.hidden = false;
+          });
+
+          marker7.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_7.pause();
+            button7.hidden = true;
           });
 
           button.addEventListener("click", function (evt) {
@@ -219,6 +235,19 @@
             }
           });
 
+          button7.addEventListener("click", function (evt) {
+            console.log("button 7 clicked");
+            if (Video_7.muted == true) {
+              button7.innerHTML = "Pause";
+              Video_7.muted = false;
+              Video_7.play();
+            } else {
+              button7.innerHTML = "Play";
+              Video_7.muted = true;
+              Video_7.pause();
+            }
+          });
+
           fullbutton.addEventListener("click", function (evt) {
             if (fullscreen == 0) {
               if (elem.requestFullscreen) {
@@ -288,6 +317,9 @@
         Play
       </button>
       <button id="mutebutton6" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
+      <button id="mutebutton7" style="position: absolute; bottom: 10px" hidden>
         Play
       </button>
     </div>
@@ -391,6 +423,17 @@
           loop
           crossorigin="anonymous"
           src="vids/distanceFromSource.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
+        <video
+          id="Video_Asset_7"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/worship.mov"
           webkit-playsinline
           playsinline
           controls
@@ -528,6 +571,26 @@
         <a-video
           src="#Video_Asset_6"
           id="Video_6"
+          class="intersectable"
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
+      </a-marker>
+
+      <!-- worship me -->
+      <a-marker
+        id="marker7"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-hats.patt"
+        emitevents="true"
+      >
+        <a-video
+          src="#Video_Asset_7"
+          id="Video_7"
           class="intersectable"
           position="0 0 0"
           scale="1 2 1"
