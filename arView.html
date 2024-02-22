@@ -9,22 +9,31 @@
       AFRAME.registerComponent("button", {
         init: function () {
           var elem = document.documentElement;
+
           var marker = document.querySelector("#marker");
           var marker1 = document.querySelector("#marker1");
+          var marker2 = document.querySelector("#marker2");
+
           var fullbutton = document.querySelector("#fullscreen");
           var Video_0 = document.querySelector("#Video_Asset_0");
           var Video_1 = document.querySelector("#Video_Asset_1");
+          var Video_2 = document.querySelector("#Video_Asset_2");
+
           var button = document.querySelector("#mutebutton");
           var button1 = document.querySelector("#mutebutton1");
+          var button2 = document.querySelector("#mutebutton2");
+
           button.hidden = true;
           button1.hidden = true;
+          button2.hidden = true;
+
           Video_0.pause();
           Video_1.pause();
+          Video_2.pause();
 
           marker.addEventListener("markerFound", function (evt) {
             markerFound = 1;
             button.hidden = false;
-            //Video_0.play();  //if video should start immediately on marker detection
           });
 
           marker.addEventListener("markerLost", function (evt) {
@@ -36,13 +45,23 @@
           marker1.addEventListener("markerFound", function (evt) {
             markerFound = 1;
             button1.hidden = false;
-            //Video_1.play();  //if video should start immediately on marker detection
           });
 
           marker1.addEventListener("markerLost", function (evt) {
             markerFound = 0;
             Video_1.pause();
             button1.hidden = true;
+          });
+
+          marker2.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button2.hidden = false;
+          });
+
+          marker2.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_2.pause();
+            button2.hidden = true;
           });
 
           button.addEventListener("click", function (evt) {
@@ -57,7 +76,6 @@
               Video_0.pause();
             }
           });
-
           button1.addEventListener("click", function (evt) {
             console.log("button 1 clicked");
             if (Video_1.muted == true) {
@@ -68,6 +86,18 @@
               button1.innerHTML = "Play";
               Video_1.muted = true;
               Video_1.pause();
+            }
+          });
+          button2.addEventListener("click", function (evt) {
+            console.log("button 2 clicked");
+            if (Video_2.muted == true) {
+              button2.innerHTML = "Pause";
+              Video_2.muted = false;
+              Video_2.play();
+            } else {
+              button2.innerHTML = "Play";
+              Video_2.muted = true;
+              Video_2.pause();
             }
           });
 
@@ -127,6 +157,9 @@
       <button id="mutebutton1" style="position: absolute; bottom: 10px" hidden>
         Play
       </button>
+      <button id="mutebutton2" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
     </div>
     <div
       style="
@@ -161,7 +194,7 @@
           autoplay="false"
           loop
           crossorigin="anonymous"
-          src="vids/scanArtist.mov"
+          src="vids/aestheticComputer.mov"
           webkit-playsinline
           playsinline
           controls
@@ -178,8 +211,27 @@
           controls
           muted
         ></video>
+        <video
+          id="Video_Asset_2"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/scanArtist.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
       </a-assets>
-      <a-marker id="marker" preset="hiro" emitevents="true" button>
+      <!-- AC -->
+      <a-marker
+        id="marker"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-horse.patt"
+        emitevents="true"
+        button
+      >
         <a-video
           src="#Video_Asset_0"
           id="Video_0"
@@ -191,10 +243,35 @@
           transparent="False"
         ></a-video>
       </a-marker>
-      <a-marker id="marker1" preset="kanji" emitevents="true">
+      <!-- ready -->
+      <a-marker
+        id="marker1"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-cross.patt"
+        emitevents="true"
+      >
         <a-video
           src="#Video_Asset_1"
           id="Video_1"
+          class="intersectable"
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
+      </a-marker>
+      <a-marker
+        id="marker2"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-shirtBasic.patt"
+        emitevents="true"
+      >
+        <a-video
+          src="#Video_Asset_2"
+          id="Video_2"
           class="intersectable"
           position="0 0 0"
           scale="1 2 1"
