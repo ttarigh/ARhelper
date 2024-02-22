@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+  <style>
+    #arjsDebugUIContainer {
+      display: none;
+    }
+  </style>
+  <body style="margin: 0px; overflow: hidden">
+    <a-scene embedded arjs="sourceType: webcam;">
+      <a-marker
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-Screenshot%202024-02-21%20at%2011.00.52%20PM.patt"
+      >
+        <a-plane
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          material="shader: flat; src: #video4"
+        ></a-plane>
+        <video
+          id="video4"
+          loop
+          crossorigin="anonymous"
+          src="vids/pianos.mov"
+        ></video>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+
+      <script>
+        const marker = document.querySelector("a-marker");
+        const video = document.querySelector("#video4");
+
+        marker.addEventListener("markerFound", () => {
+          video.play();
+        });
+
+        marker.addEventListener("markerLost", () => {
+          video.pause();
+        });
+      </script>
+    </a-scene>
+  </body>
+</html>

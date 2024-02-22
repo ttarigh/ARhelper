@@ -14,17 +14,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-aestheticComputer.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-aestheticComputer%20(1).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
           material="shader: flat; src: #video"
         ></a-plane>
         <video
           id="video"
-          autoplay
           loop
           crossorigin="anonymous"
           src="vids/aestheticComputer.mov"
@@ -35,17 +34,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-distanceFromSource.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-distanceFromSource%20(1).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
           material="shader: flat; src: #video2"
         ></a-plane>
         <video
           id="video2"
-          autoplay
           loop
           crossorigin="anonymous"
           src="vids/distanceFromSource.mov"
@@ -56,17 +54,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-emotionsDetector.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-emotionsDetector%20(1).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
           material="shader: flat; src: #video3"
         ></a-plane>
         <video
           id="video3"
-          autoplay
           loop
           crossorigin="anonymous"
           src="vids/emotionsDetector.mov"
@@ -77,17 +74,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-pianos.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-Screenshot%202024-02-21%20at%2011.00.52%20PM.patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
           material="shader: flat; src: #video4"
         ></a-plane>
         <video
           id="video4"
-          autoplay
           loop
           crossorigin="anonymous"
           src="vids/pianos.mov"
@@ -98,17 +94,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-readyCompanion%20(1).patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-readyCompanion%20(2).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
           material="shader: flat; src: #video5"
         ></a-plane>
         <video
           id="video5"
-          autoplay
           loop
           crossorigin="anonymous"
           src="vids/readyCompanion.mov"
@@ -119,17 +114,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-scanArtist%20(1).patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-scanArtist%20(2).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
-          material="shader: flat; src: #video5"
+          material="shader: flat; src: #video6"
         ></a-plane>
         <video
-          id="video5"
-          autoplay
+          id="video6"
           loop
           crossorigin="anonymous"
           src="vids/scanArtist.mov"
@@ -140,17 +134,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-uyeSurana.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-uyeSurana%20(1).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
-          material="shader: flat; src: #video5"
+          material="shader: flat; src: #video7"
         ></a-plane>
         <video
-          id="video5"
-          autoplay
+          id="video7"
           loop
           crossorigin="anonymous"
           src="vids/uyeSuranaAR.mov"
@@ -161,17 +154,16 @@
       <a-marker
         preset="pattern"
         type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-worshipMe.patt"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-worshipMe%20(1).patt"
       >
         <a-plane
           position="0 0 0"
-          scale="1 1 1"
+          scale="1 2 1"
           rotation="-90 0 0"
-          material="shader: flat; src: #video5"
+          material="shader: flat; src: #video8"
         ></a-plane>
         <video
-          id="video5"
-          autoplay
+          id="video8"
           loop
           crossorigin="anonymous"
           src="vids/worship.mov"
@@ -179,6 +171,26 @@
       </a-marker>
 
       <a-entity camera></a-entity>
+
+      <script>
+        // Get all marker elements
+        const markers = document.querySelectorAll("a-marker");
+
+        // Loop through each marker
+        markers.forEach((marker) => {
+          // Get the associated video element
+          const video = marker.querySelector("video");
+
+          // Add event listeners for marker events
+          marker.addEventListener("markerFound", () => {
+            video.play();
+          });
+
+          marker.addEventListener("markerLost", () => {
+            video.pause();
+          });
+        });
+      </script>
     </a-scene>
   </body>
 </html>
