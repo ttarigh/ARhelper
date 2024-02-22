@@ -1,234 +1,163 @@
+<!--
+  This one mainly based on https://github.com/taylordigital13/ARjs_Unity
+  Fullscreen buttons are just simple png and the video is mpeg-4 baseline-profile with AAC audio.
+  The video is placed on the Hiro marker and playback is stopped until the user clicks the play button.
+  The same applies to losing and finding the marker again.
+  Problem: On iOS, the video sticks 1.5 times below the actual mark on the screen.
+  This, I have read, comes from the VR setup on iOS, which sets the camera a bit higher.
+!-->
+
 <!DOCTYPE html>
 <html>
-  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
-  <style>
-    #arjsDebugUIContainer {
-      display: none;
-    }
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <!-- we import arjs version without NFT but with marker + location based support -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script>
+      var markerFound = 0;
+      AFRAME.registerComponent("button", {
+        init: function () {
+          var elem = document.documentElement;
+          var marker = document.querySelector("#marker");
+          var fullbutton = document.querySelector("#fullscreen");
+          var Video_0 = document.querySelector("#Video_Asset_0");
+          var button = document.querySelector("#mutebutton");
+          button.hidden = true;
+          Video_0.pause();
 
-    #introScreen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255);
-      font-family: Rockwell Extra Bold,Rockwell Bold,monospace; 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: black;
-      font-size: 24px;
-      z-index: 9999;
-    }
-  </style>
-  <body style="margin: 0px; overflow: hidden">
-    <div id="introScreen" onclick="startExperience()">Click to begin the AR Experience</div>
-    <a-scene embedded arjs="sourceType: webcam;">
-      <!-- Aesthetic Computer-->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-aestheticComputer%20(1).patt"
-        data-video-url="vids/aestheticComputer.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video"
-        ></a-plane>
+          marker.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button.hidden = false;
+            //Video_0.play();  //if video should start immediently on marker detection
+          });
+
+          marker.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_0.pause();
+            button.hidden = true;
+          });
+
+          button.addEventListener("click", function (evt) {
+            console.log("button clicked");
+            if (Video_0.muted == true) {
+              button.innerHTML = "Pause";
+              Video_0.muted = false;
+              Video_0.play();
+            } else {
+              button.innerHTML = "Play";
+              Video_0.muted = true;
+              Video_0.pause();
+            }
+          });
+
+          fullbutton.addEventListener("click", function (evt) {
+            if (fullscreen == 0) {
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.mozRequestFullScreen) {
+                /* Firefox */
+                elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+              } else if (elem.msRequestFullscreen) {
+                /* IE/Edge */
+                elem.msRequestFullscreen();
+              }
+              fullbutton.setAttribute("src", "vendor/exit_fullscreen.png");
+              fullscreen = 1;
+            } else {
+              if (document.exitFullscreen) {
+                document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+              } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+              }
+              fullbutton.setAttribute("src", "vendor/fullscreen.png");
+              fullscreen = 0;
+            }
+          });
+        },
+        tick: function (totalTime, deltaTime) {
+          var dTime = deltaTime / 1000;
+          if (markerFound == 1) {
+          }
+        },
+      });
+    </script>
+  </head>
+  <body style="margin: 0px; overflow: hidden; font-family: Monospace">
+    <div
+      style="
+        position: absolute;
+        bottom: 10px;
+        right: 30px;
+        width: 100%;
+        text-align: center;
+        z-index: 1;
+      "
+    >
+      <button id="mutebutton" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
+    </div>
+    <div
+      style="
+        position: absolute;
+        bottom: 5px;
+        left: 30px;
+        width: 100%;
+        text-align: right;
+        z-index: 1;
+      "
+    >
+      <input
+        type="image"
+        id="fullscreen"
+        src="IMG_0717.jpg"
+        style="position: absolute; bottom: 0px; right: 35px"
+      />
+    </div>
+    <a-scene
+      embedded
+      arjs="debugUIEnabled: false; sourceType: webcam"
+      vr-mode-ui="enabled: false"
+    >
+      <a-entity
+        id="mouseCursor"
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .intersectable; useWorldCoordinates: true;"
+      ></a-entity>
+      <a-assets>
         <video
-          id="video"
+          id="Video_Asset_0"
+          autoplay="false"
           loop
-          playsinline
           crossorigin="anonymous"
           src="vids/aestheticComputer.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
         ></video>
-      </a-marker>
+      </a-assets>
+      <a-marker id="marker" preset="pattern" type="pattern" url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-scanArtist%20(2).patt" emitevents="true" button>
+        <a-video
+          src="#Video_Asset_0"
+          id="Video_0"
+          class="intersectable"
 
-      <!-- Distance From Source -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-distanceFromSource%20(1).patt"
-        data-video-url="vids/distanceFromSource.mov"
-      >
-        <a-plane
           position="0 0 0"
           scale="1 2 1"
           rotation="-90 0 0"
-          material="shader: flat; src: #video2"
-        ></a-plane>
-        <video
-          id="video2"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/distanceFromSource.mov"
-        ></video>
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
       </a-marker>
-
-      <!-- Emotions Detector -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-emotionsDetector%20(1).patt"
-        data-video-url="vids/emotionsDetector.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video3"
-        ></a-plane>
-        <video
-          id="video3"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/emotionsDetector.mov"
-        ></video>
-      </a-marker>
-
-      <!-- Pianos-->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-Screenshot%202024-02-21%20at%2011.00.52%20PM.patt"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video4"
-        ></a-plane>
-        <video
-          id="video4"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/pianos.mov"
-        ></video>
-      </a-marker>
-
-      <!-- Ready Companion -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-readyCompanion%20(2).patt"
-        data-video-url="vids/readyCompanion.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video5"
-        ></a-plane>
-        <video
-          id="video5"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/readyCompanion.mov"
-        ></video>
-      </a-marker>
-
-      <!-- scan artist -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-scanArtist%20(2).patt"
-        data-video-url="vids/scanArtist.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video6"
-        ></a-plane>
-        <video
-          id="video6"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/scanArtist.mov"
-        ></video>
-      </a-marker>
-
-      <!-- Uye Surana -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-uyeSurana%20(1).patt"
-        data-video-url="vids/uyeSuranaAR.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video7"
-        ></a-plane>
-        <video
-          id="video7"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/uyeSuranaAR.mov"
-        ></video>
-      </a-marker>
-
-      <!-- Worship Me -->
-      <a-marker
-        preset="pattern"
-        type="pattern"
-        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-worshipMe%20(1).patt"
-        data-video-url="vids/worship.mov"
-      >
-        <a-plane
-          position="0 0 0"
-          scale="1 2 1"
-          rotation="-90 0 0"
-          material="shader: flat; src: #video8"
-        ></a-plane>
-        <video
-          id="video8"
-          loop
-          playsinline
-          crossorigin="anonymous"
-          src="vids/worship.mov"
-        ></video>
-      </a-marker>
-
       <a-entity camera></a-entity>
-
-      <script>
-        // Function to start the AR experience when user clicks
-        function startExperience() {
-          // Hide the intro screen
-          document.getElementById("introScreen").style.display = "none";
-
-          // Get all marker elements
-          const markers = document.querySelectorAll("a-marker");
-
-          // Loop through each marker
-          markers.forEach((marker) => {
-            // Get the associated video element
-            const video = marker.querySelector("video");
-
-            // Add event listeners for marker events
-            marker.addEventListener("markerFound", () => {
-              video.play();
-            });
-
-            marker.addEventListener("markerLost", () => {
-              video.pause();
-            });
-          });
-        }
-      </script>
     </a-scene>
   </body>
 </html>
