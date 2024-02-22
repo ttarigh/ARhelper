@@ -16,6 +16,8 @@
           var marker3 = document.querySelector("#marker3");
           var marker4 = document.querySelector("#marker4");
           var marker5 = document.querySelector("#marker5");
+          var marker6 = document.querySelector("#marker6");
+
 
           var fullbutton = document.querySelector("#fullscreen");
           var Video_0 = document.querySelector("#Video_Asset_0");
@@ -24,6 +26,8 @@
           var Video_3 = document.querySelector("#Video_Asset_3");
           var Video_4 = document.querySelector("#Video_Asset_4");
           var Video_5 = document.querySelector("#Video_Asset_5");
+          var Video_6 = document.querySelector("#Video_Asset_6");
+
 
           var button = document.querySelector("#mutebutton");
           var button1 = document.querySelector("#mutebutton1");
@@ -31,6 +35,8 @@
           var button3 = document.querySelector("#mutebutton3");
           var button4 = document.querySelector("#mutebutton4");
           var button5 = document.querySelector("#mutebutton5");
+          var button6 = document.querySelector("#mutebutton6");
+
 
           button.hidden = true;
           button1.hidden = true;
@@ -38,6 +44,8 @@
           button3.hidden = true;
           button4.hidden = true;
           button5.hidden = true;
+          button6.hidden = true;
+
 
           Video_0.pause();
           Video_1.pause();
@@ -45,6 +53,8 @@
           Video_3.pause();
           Video_4.pause();
           Video_5.pause();
+          Video_6.pause();
+
 
           marker.addEventListener("markerFound", function (evt) {
             markerFound = 1;
@@ -110,6 +120,17 @@
             markerFound = 0;
             Video_5.pause();
             button5.hidden = true;
+          });
+
+          marker6.addEventListener("markerFound", function (evt) {
+            markerFound = 1;
+            button6.hidden = false;
+          });
+
+          marker6.addEventListener("markerLost", function (evt) {
+            markerFound = 0;
+            Video_6.pause();
+            button6.hidden = true;
           });
 
           button.addEventListener("click", function (evt) {
@@ -185,6 +206,19 @@
             }
           });
 
+          button6.addEventListener("click", function (evt) {
+            console.log("button 6 clicked");
+            if (Video_6.muted == true) {
+              button6.innerHTML = "Pause";
+              Video_6.muted = false;
+              Video_6.play();
+            } else {
+              button6.innerHTML = "Play";
+              Video_6.muted = true;
+              Video_6.pause();
+            }
+          });
+
           fullbutton.addEventListener("click", function (evt) {
             if (fullscreen == 0) {
               if (elem.requestFullscreen) {
@@ -251,6 +285,9 @@
         Play
       </button>
       <button id="mutebutton5" style="position: absolute; bottom: 10px" hidden>
+        Play
+      </button>
+      <button id="mutebutton6" style="position: absolute; bottom: 10px" hidden>
         Play
       </button>
     </div>
@@ -343,6 +380,17 @@
           loop
           crossorigin="anonymous"
           src="vids/emotionsDetector.mov"
+          webkit-playsinline
+          playsinline
+          controls
+          muted
+        ></video>
+        <video
+          id="Video_Asset_6"
+          autoplay="false"
+          loop
+          crossorigin="anonymous"
+          src="vids/distanceFromSource.mov"
           webkit-playsinline
           playsinline
           controls
@@ -460,6 +508,26 @@
         <a-video
           src="#Video_Asset_5"
           id="Video_5"
+          class="intersectable"
+          position="0 0 0"
+          scale="1 2 1"
+          rotation="-90 0 0"
+          color="#FFFFFF"
+          transparent="False"
+        ></a-video>
+      </a-marker>
+
+      <!-- distance from source -->
+      <a-marker
+        id="marker6"
+        preset="pattern"
+        type="pattern"
+        url="https://raw.githubusercontent.com/ttarigh/rawPatt/main/pattern-lazars3.patt"
+        emitevents="true"
+      >
+        <a-video
+          src="#Video_Asset_6"
+          id="Video_6"
           class="intersectable"
           position="0 0 0"
           scale="1 2 1"
